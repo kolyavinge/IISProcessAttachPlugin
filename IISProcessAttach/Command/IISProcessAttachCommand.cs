@@ -36,7 +36,7 @@ namespace IISProcessAttach.Command
             this._package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
+            var menuItem = new MenuCommand(Execute, menuCommandID);
             commandService.AddCommand(menuItem);
         }
 
@@ -50,7 +50,7 @@ namespace IISProcessAttach.Command
         /// </summary>
         private IAsyncServiceProvider ServiceProvider
         {
-            get { return this._package; }
+            get { return _package; }
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace IISProcessAttach.Command
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var iisProcess = new IISProcessAttach.Model.IISProcess(_package);
+            var iisProcess = new IISProcessAttach.Model.IISProcess();
             iisProcess.Attach();
         }
     }
